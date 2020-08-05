@@ -9,6 +9,8 @@ class Dashing.Trash extends Dashing.Widget
    # You can access the html node of this widget with `@node`
    # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
     @setSigns(data)
+    @setDateString(data.date)
+    @set('date', data.date)
 
   setSigns: (data) ->
     if data.type == 1
@@ -46,11 +48,4 @@ class Dashing.Trash extends Dashing.Widget
 
   formatTime: (i) ->
     if i < 10 then "0" + i else i
-
-  formatDate: (date) ->
-    d = new Date(date)
-    year = d.getFullYear()
-    month = @formatTime(d.getMonth()+1)
-    day = @formatTime(d.getDate())
-    return "#{day}.#{month}.#{year}"
 
