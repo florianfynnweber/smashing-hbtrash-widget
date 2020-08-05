@@ -37,7 +37,7 @@ class Dashing.Trash extends Dashing.Widget
 
   setDateString: (date) ->
     today = new Date()
-    trashdate = Date.parse(date)
+    trashdate = new Date(date.replace(/(\d{2})\.(\d{2})\.(\d{4})/, '$3-$2-$1'))
     daysup = Math.ceil((trashdate - today) / (1000 * 60 * 60 * 24))
     if daysup < 1
       @set('date_string', "Heute")
