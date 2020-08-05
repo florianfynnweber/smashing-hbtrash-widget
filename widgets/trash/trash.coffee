@@ -1,16 +1,16 @@
 class Dashing.Trash extends Dashing.Widget
 
- ready: ->
+  ready: ->
     # This is fired when the widget is done being rendered
     $(".sign").hide(); #hide all signs
 
- onData: (data) ->
+  onData: (data) ->
    # Handle incoming data
    # You can access the html node of this widget with `@node`
    # Example: $(@node).fadeOut().fadeIn() will make the node flash each time data comes in.
     @setSigns(data)
 
- setSigns: (data) ->
+  setSigns: (data) ->
     if data.type == 1
         $(".text").text("Restmüll / Bioabfall")
         $(".sign_blue").hide()
@@ -32,4 +32,25 @@ class Dashing.Trash extends Dashing.Widget
         $(".sign_black").hide()
         $(".sign_brown").hide()
         $(".sign_tree").show()
+
+  setDateString: (date) ->
+    today = new Date()
+    trashdate = Date.parse(date)
+    daysup = Math.ceil((trashdate - today) / (1000 * 60 * 60 * 24))
+    if daysup < 1
+      @set('date_string', "Heute")
+    else if daysup == 1
+      @set('date_string', "Morgen")
+    else
+      @set('date_string', "Noch #{daysup} Tage")
+
+  formatTime: (i) ->
+    if i < 10 then "0" + i else i
+
+  formatDate: (date) ->
+    d = new Date(date)
+    year = d.getFullYear()
+    month = @formatTime(d.getMonth()+1)
+    day = @formatTime(d.getDate())
+    return "#{day}.#{month}.#{year}"
 
